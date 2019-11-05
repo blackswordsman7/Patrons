@@ -1,0 +1,41 @@
+{
+  "name": "aave-tribute-react",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.5.0",
+    "@material-ui/icons": "^4.4.3",
+    "dotenv": "^8.2.0",
+    "ethers": "^4.0.37",
+    "jimp": "^0.8.5",
+    "qrcode-reader": "^1.0.4",
+    "react": "^16.11.0",
+    "react-copy-to-clipboard": "^5.0.1",
+    "react-dom": "^16.11.0",
+    "react-file-reader-input": "^2.0.0",
+    "react-jss": "^10.0.0",
+    "react-qr-reader": "^2.2.1",
+    "react-scripts": "3.2.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
