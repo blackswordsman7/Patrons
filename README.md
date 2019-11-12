@@ -49,7 +49,8 @@ import Web3Service from "../services/web3";
 1. Get the contract using this function
 
 ```javascript
-let constract = await Web3Service.getContract();
+import rDaiContract from "rDai.abi.json";
+let constract = await Web3Service.getContract(rDaiContract);
 ```
 
 1. Get the account balance in rDai
