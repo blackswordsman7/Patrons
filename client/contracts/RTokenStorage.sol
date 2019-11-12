@@ -4,7 +4,6 @@
  * https://blog.ethereum.org/2019/06/25/solidity-storage-array-bugs/
  */
 pragma solidity >=0.5.10 <0.6.0;
-pragma experimental ABIEncoderV2;
 
 import {RTokenStructs} from "./RTokenStructs.sol";
 import {IERC20} from "./IRToken.sol";
@@ -56,11 +55,8 @@ contract RTokenStorage is RTokenStructs, IERC20 {
     /// @dev Approved token transfer amounts on behalf of others
     mapping(address => mapping(address => uint256)) public transferAllowances;
     /// @dev Hat list
-    Hat[] internal hats;
+    Patron[] internal hats;
     /// @dev Account mapping
-    mapping(address => Account) public accounts;
-    /// @dev AccountStats mapping
-    mapping(address => AccountStatsStored) public accountStats;
-    /// @dev HatStats mapping
-    mapping(uint256 => HatStatsStored) public hatStats;
+    mapping(address => aAccount) public accounts;
+    
 }

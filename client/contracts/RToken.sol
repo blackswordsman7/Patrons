@@ -4,7 +4,6 @@
  * https://blog.ethereum.org/2019/06/25/solidity-storage-array-bugs/
  */
 pragma solidity >=0.5.10 <0.6.0;
-pragma experimental ABIEncoderV2;
 
 import {Ownable} from "./Ownable.sol";
 import {SafeMath} from "./installed-contracts/openzeppelin-solidity/contracts/math/SafeMath.sol";
@@ -39,16 +38,6 @@ contract RToken is IRToken, Ownable, ReentrancyGuard {
      *   - recipients.length == proportions.length
      *   - each value in proportions should be greater than 0
      */
-    struct Patron {
-        address owner;
-        string title;
-        string description;
-        string link;
-        string iconlink;
-        string githublink;
-        address[] recipients;
-        uint32[] proportions;
-    }
 
     /// @dev Current saving strategy
     IAllocationStrategy private ias;
@@ -72,27 +61,6 @@ contract RToken is IRToken, Ownable, ReentrancyGuard {
 
     /// @dev Hat list
     Patron[] private hats;
-
-    /// @dev Account structure
-    struct aAccount{
-        //
-        // Essential info
-        //
-        /// @dev ID of the hat selected for the account
-        uint256 hatID;
-        /// @dev Redeemable token balance for the account
-        uint256 rAmount;
-        /// @dev Redeemable token balance portion that is from interest payment
-        uint256 rInterest;
-        /// @dev Loan recipients and their amount of debt
-        mapping (address => uint256) lRecipients;
-        /// @dev Loan debt amount for the account
-        uint256 lDebt;
-        /// @dev Saving asset amount internal
-        uint256 sInternalAmount;
-
-        uint256 cumulativeInterest;
-    }
 
     /// @dev Account mapping
     mapping (address => aAccount) private accounts;
@@ -307,43 +275,16 @@ contract RToken is IRToken, Ownable, ReentrancyGuard {
 
     /// @dev IRToken.getHatByAddress implementation
     function getHatByAddress(address owner) external view returns (
-        uint256 hatID,
-        address owner,
-        string memory title,
-        string memory title,
-        string memory link,
-        string memory iconlink,
-        string memory githublink,
-        address[] memory recipients,
-        uint32[] memory proportions) {
+        uint256 hatID) {
         hatID = accounts[owner].hatID;
-        if (hatID != 0 && hatID != SELF_HAT_ID) {
-            Patron memory hat = hats[hatID];
-            hatID = hatID;
-            owner = hat.owner;
-            title = hat.title;
-            link = hat.link;
-            iconlink = hat.iconlink;
-            githublink = hat.githublink;
-            recipients = hat.recipients;
-            proportions = hat.proportions;
-        } else {
-            hatID = "";
-            owner = "";
-            title = "";
-            link = "";
-            iconlink = "";
-            githublink = "";
-            recipients = new address[](0);
-            proportions = new uint32[](0);
-        }
+        return hatID;
     }
 
     /// @dev IRToken.getHatByID implementation
     function getHatByID(uint256 hatID) external view returns (
         address owner,
         string memory title,
-        string memory title,
+        string memory description,
         string memory link,
         string memory iconlink,
         string memory githublink,
@@ -353,13 +294,14 @@ contract RToken is IRToken, Ownable, ReentrancyGuard {
             Patron memory hat = hats[hatID];
             owner = hat.owner;
             title = hat.title;
+            description = hat.description;
             link = hat.link;
             iconlink = hat.iconlink;
             githublink = hat.githublink;
             recipients = hat.recipients;
             proportions = hat.proportions;
         } else {
-            owner = "";
+            owner = address(0);
             title = "";
             link = "";
             iconlink = "";
@@ -396,17 +338,6 @@ contract RToken is IRToken, Ownable, ReentrancyGuard {
         return true;
     }
 
-    /// @dev IRToken.getAccountStats implementation!1
-    function getGlobalStats() external view returns (GlobalStats memory) {
-        uint256 totalSavingsAmount;
-        totalSavingsAmount += savingAssetOrignalAmount
-            .mul(ias.exchangeRateStored())
-            .div(10 ** 18);
-        return GlobalStats({
-            totalSupply: totalSupply,
-            totalSavingsAmount: totalSavingsAmount
-        });
-    }
     /// @dev IRToken.getCurrentSavingStrategy implementation
     function getCurrentSavingStrategy() external view returns (address) {
         return address(ias);

@@ -4,8 +4,6 @@
  * https://blog.ethereum.org/2019/06/25/solidity-storage-array-bugs/
  */
 pragma solidity >=0.5.10 <0.6.0;
-pragma experimental ABIEncoderV2;
-
 import {RTokenStructs} from "./RTokenStructs.sol";
 import {IERC20} from "./installed-contracts/openzeppelin-solidity/contracts/token/ERC20/IERC20.sol";
 
@@ -45,13 +43,13 @@ contract IRToken is RTokenStructs, IERC20 {
     function mintWithNewHat(
         uint256 mintAmount,
         address owner,
-        string memory title,
-        string memory description,
-        string memory link,
-        string memory iconlink,
-        string memory githublink,
-        address[] memory recipients,
-        uint32[] memory proportions
+        string calldata title,
+        string calldata description,
+        string calldata link,
+        string calldata iconlink,
+        string calldata githublink,
+        address[] calldata recipients,
+        uint32[] calldata proportions
     ) external returns (bool);
 
     /**
@@ -103,18 +101,17 @@ contract IRToken is RTokenStructs, IERC20 {
      * @notice Create a new Hat
      * @param recipients List of beneficial recipients
      * @param proportions Relative proportions of benefits received by the recipients
-     * @param doChangeHat Should the hat of the `msg.sender` be switched to the new one
      * @return uint256 ID of the newly creatd Hat.
      */
     function createHat(
         address owner,
-        string memory title,
-        string memory description,
-        string memory link,
-        string memory iconlink,
-        string memory githublink,
-        address[] memory recipients,
-        uint32[] memory proportions
+        string calldata title,
+        string calldata description,
+        string calldata link,
+        string calldata iconlink,
+        string calldata githublink,
+        address[] calldata recipients,
+        uint32[] calldata proportions
     ) external returns (uint256 hatID);
 
     /**
@@ -157,15 +154,7 @@ contract IRToken is RTokenStructs, IERC20 {
         external
         view
         returns (
-            uint256 hatID,
-        address owner,
-        string memory title,
-        string memory description,
-        string memory link,
-        string memory iconlink,
-        string memory githublink,
-        address[] memory recipients,
-        uint32[] memory proportions
+            uint256 hatID
         );
 
     /**
@@ -238,31 +227,6 @@ contract IRToken is RTokenStructs, IERC20 {
         view
         returns (uint256 rAmount, uint256 sOriginalAmount);
 
-    /**
-    * @notice Get global stats
-    * @return global stats
-    */
-    function getGlobalStats() external view returns (GlobalStats memory);
-
-    /**
-    * @notice Get account stats
-    * @param owner Account owner address
-    * @return account stats
-    */
-    function getAccountStats(address owner)
-        external
-        view
-        returns (AccountStatsView memory);
-
-    /**
-    * @notice Get hat stats
-    * @param hatID Hat ID
-    * @return hat stats
-    */
-    function getHatStats(uint256 hatID)
-        external
-        view
-        returns (HatStatsView memory);
 
     ////////////////////////////////////////////////////////////////////////////
     // Events

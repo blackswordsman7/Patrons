@@ -1,4 +1,6 @@
-import { ethers } from "ethers";
+import {
+  ethers
+} from "ethers";
 // import rDAIContract from "./contracts/rDAI.abi.json";
 
 class Web3Service {
@@ -61,7 +63,10 @@ class Web3Service {
     if (hats !== undefined) {
       allocated = hats.proportions[0];
     }
-    return { hats, allocated };
+    return {
+      hats,
+      allocated
+    };
   };
 
   mintRDai = async (amount, contract) => {
@@ -73,6 +78,20 @@ class Web3Service {
     let daiAmount = await contract.redeem(amount);
     return daiAmount;
   };
+
+  createGrant = async (title, description, link, iconlink, githublink, recipients, proportions, contract) => {
+    let hatId = await contract.createHat(title, description, link, iconlink, githublink, recipients, proportions);
+    return hatId;
+  }
+
+  changeHat = async (hatId) => {
+    let changed = await contract.changeHat(hatId);
+    return changed;
+  }
+
+  getHatByAddress = async () => {
+    
+  }
 }
 
 export default new Web3Service();
