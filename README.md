@@ -49,7 +49,6 @@ import Web3Service from "../services/web3";
 1. Get the contract using this function
 
 ```javascript
-import Web3Service from "../services/web3";
 let constract = await Web3Service.getContract();
 ```
 
