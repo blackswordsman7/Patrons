@@ -1,6 +1,4 @@
 <h1 align="center">
-  
-
   <img src="defi2-02.png" width = "250" height = "250"/>
 <br>
 </h1>
@@ -40,8 +38,7 @@ flexibility and encourages a larger audience to become one of us.
 
 
 ## Code Examples
-Show examples of usage:
-`put-your-code-here`
+[Project Breakdown]("*")
 
 ## Features
 
