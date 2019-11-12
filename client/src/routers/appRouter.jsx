@@ -28,8 +28,13 @@ function AppRouter() {
 
       console.log(address[0]);
       setSelectedAddress(address[0]);
+
+      const contract = await Web3Service.getContract();
+      console.log(contract);
+
+      setContract(contract);
     };
-    console.log(Web3Service.getContract());
+
     fetchAccount();
   }, []);
 
@@ -38,7 +43,10 @@ function AppRouter() {
       <App address={selectedAddress}>
         <Route path="/wallet" render={() => <WalletPage />} />
         <Route path="/interest" render={() => <InterestPage />} />
-        <Route path="/create-grant" render={() => <CreateGrantPage />} />
+        <Route
+          path="/create-grant"
+          render={() => <CreateGrantPage contract={contract} />}
+        />
         <Route path="/grants" render={() => <GrantPage />} />
         <Route path="/deposit" render={() => <DepositGrantPage />} />
         <Route exact path="/" render={() => <Redirect to="/grants" />} />

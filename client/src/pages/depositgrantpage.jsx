@@ -3,6 +3,12 @@ import GrantCard from "../components/grantcard";
 import { Grid, TextField, Button, Typography } from "@material-ui/core";
 
 export default function DepositGrantPage(props) {
+  const changeHat = (hatId) => {
+    let changed = await Web3Service.changeHat(
+      hatId
+    );
+    console.log(changed);
+  }
   return (
     <div>
       <Grid
@@ -31,22 +37,16 @@ export default function DepositGrantPage(props) {
               </Grid>
               <Grid container direction="row" justify="center">
                 <Typography>
-                  To show your support to the open source projects
+                  To show your support to the open source projects by
+                  redirecting your interest
                 </Typography>
               </Grid>
-              <TextField
-                id="outlined-basic"
-                type="number"
-                fullWidth
-                label="Deposit Grant"
-                margin="normal"
-                variant="outlined"
-              />
               <Grid container direction="row" justify="center">
                 <Button
                   variant="contained"
                   color="primary"
                   style={{ fontWeight: 600, padding: 8 }}
+                  onClick={e => changeHat(1)}
                 >
                   Deposit
                 </Button>
